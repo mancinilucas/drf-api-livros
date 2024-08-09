@@ -1,10 +1,11 @@
-import json
-from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import Livro
 # Create your views here.
 
 
+@api_view()
 def livros_view(request):
     livros = Livro.objects.all()
     output = [{
@@ -12,4 +13,4 @@ def livros_view(request):
         'autor': livro.autor,
         'categoria': livro.categoria
     } for livro in livros]
-    return HttpResponse(json.dumps(output))
+    return Response(output)
