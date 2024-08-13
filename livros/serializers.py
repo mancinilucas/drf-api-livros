@@ -5,3 +5,4 @@ from rest_framework import serializers
 class LivrosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Livro
+        exclude = []

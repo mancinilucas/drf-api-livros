@@ -1,6 +1,7 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from .serializers import LivrosSerializer
 
 from .models import Livro
 
@@ -12,12 +13,8 @@ class LivrosApiView(APIView):
 
     def get(self, request):
         livros = Livro.objects.all()
-        output = [{
-            'nome': livro.nome,
-            'autor': livro.autor,
-            'categoria': livro.categoria
-        } for livro in livros]
-        return Response(output)
+        serializer = LivrosSerializer(livros, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         livro = Livro.objects.create(nome=request.data.get('nome'),
